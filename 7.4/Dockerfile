@@ -1,47 +1,31 @@
-FROM php:7.4-alpine
+FROM ubuntu:20.04
 
 LABEL maintainer="Ryan Durham <ryan@stagerightlabs.com>"
 
-RUN apk add --no-cache autoconf g++ libtool make \
-    pcre-dev \
-    libmcrypt-dev \
-    postgresql-dev \
-    zlib-dev \
-    libzip-dev \
-    imagemagick-dev \
-    imagemagick \
-    freetype \
-    freetype-dev \
-    libpng \
-    libpng-dev \
-    libjpeg-turbo \
-    libjpeg-turbo-dev \
-    libjpeg \
-    libxml2-dev \
-    curl-dev
+ARG DEBIAN_FRONTEND=noninteractive
 
-RUN pecl install -o -f redis imagick && docker-php-ext-enable redis imagick
+RUN apt-get update && apt-get install -y software-properties-common curl
+RUN add-apt-repository ppa:ondrej/php -y
+RUN add-apt-repository ppa:git-core/ppa -y
+RUN apt-get update -y
+RUN apt-get install -y \
+    unzip  \
+    php7.4-cli \
+    php7.4-gd \
+    php7.4-json \
+    php7.4-mbstring \
+    php7.4-mysql \
+    php7.4-pgsql \
+    php7.4-sqlite3 \
+    php7.4-xml \
+    php7.4-zip \
+    php7.4-curl \
+    php7.4-soap \
+    php7.4-bcmath \
+    php7.4-imagick \
+    php7.4-intl \
+    php7.4-redis \
+    php7.4-imap \
+    php7.4-phpdbg
 
-RUN docker-php-ext-configure gd \
-    --enable-gd \
-    --with-freetype \
-    --with-jpeg
 
-RUN docker-php-ext-install \
-    gd \
-    json \
-    mysqli \
-    pgsql \
-    xml \
-    zip \
-    pdo \
-    pdo_pgsql \
-    pdo_mysql \
-    curl \
-    bcmath \
-    soap \
-    intl
-
-# clean
-RUN apk del autoconf g++ libtool make pcre-dev
-RUN rm -rf /tmp/* /var/cache/apk/*
