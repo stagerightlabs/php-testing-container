@@ -28,4 +28,8 @@ RUN apt-get install -y \
     php7.4-imap \
     php7.4-phpdbg
 
-
+# Install Composer (v2.*)
+ENV COMPOSER_HOME=/composer
+ENV PATH=$PATH:/composer/vendor/bin
+ENV COMPOSER_ALLOW_SUPERUSER=1
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --2
