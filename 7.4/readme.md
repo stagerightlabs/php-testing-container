@@ -4,7 +4,7 @@ This is a docker container intended for use in continuous integration environmen
 
 ## Composer
 
-This container does not include composer. To add Composer you can either extend this container or, if you are using GitHub Actions, you can use the [php-actions/composer](https://github.com/php-actions/composer) action.
+This container comes with Composer 2 already installed and ready to go. 
 
 ## Node
 
