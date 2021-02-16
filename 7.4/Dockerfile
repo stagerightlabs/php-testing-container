@@ -4,10 +4,12 @@ LABEL maintainer="Ryan Durham <ryan@stagerightlabs.com>"
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y software-properties-common curl
-RUN add-apt-repository ppa:ondrej/php -y
-RUN add-apt-repository ppa:git-core/ppa -y
-RUN apt-get update -y
+# Update the base image
+RUN apt-get update && \
+    apt-get install -y software-properties-common curl && \
+    add-apt-repository ppa:ondrej/php -y
+    
+# Install PHP 7.4
 RUN apt-get install -y \
     unzip  \
     php7.4-cli \
