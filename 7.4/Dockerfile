@@ -4,11 +4,14 @@ LABEL maintainer="Ryan Durham <ryan@stagerightlabs.com>"
 
 ARG DEBIAN_FRONTEND=noninteractive
 
+# Add a user with UID 1000
+RUN useradd -u 1000 ubuntu
+
 # Update the base image
 RUN apt-get update && \
     apt-get install -y software-properties-common curl && \
     add-apt-repository ppa:ondrej/php -y
-    
+
 # Install PHP 7.4
 RUN apt-get install -y \
     unzip  \
