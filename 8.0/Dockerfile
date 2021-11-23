@@ -6,11 +6,11 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Update the base image
 RUN apt-get update && \
-    apt-get install -y software-properties-common curl && \
+    apt-get install -y --no-install-recommends software-properties-common curl && \
     add-apt-repository ppa:ondrej/php -y
 
 # Install PHP 8.0
-RUN apt-get install -y \
+RUN apt-get install -y --no-install-recommends \
     unzip  \
     php8.0-cli \
     php8.0-gd \
@@ -27,7 +27,8 @@ RUN apt-get install -y \
     php8.0-intl \
     php8.0-redis \
     php8.0-imap \
-    php8.0-phpdbg
+    php8.0-phpdbg \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Composer (v2.*)
 ENV COMPOSER_HOME=/composer

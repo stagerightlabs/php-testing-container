@@ -6,11 +6,11 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Update the base image
 RUN apt-get update && \
-    apt-get install -y software-properties-common curl && \
+    apt-get install -y --no-install-recommends software-properties-common curl && \
     add-apt-repository ppa:ondrej/php -y
-    
+
 # Install PHP 7.4
-RUN apt-get install -y \
+RUN apt-get install -y --no-install-recommends \
     unzip  \
     php7.4-cli \
     php7.4-gd \
@@ -28,7 +28,8 @@ RUN apt-get install -y \
     php7.4-intl \
     php7.4-redis \
     php7.4-imap \
-    php7.4-phpdbg
+    php7.4-phpdbg \
+    && rm -rf /var/cache/apt/lists/*
 
 # Install Composer (v2.*)
 ENV COMPOSER_HOME=/composer
