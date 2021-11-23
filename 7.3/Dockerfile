@@ -3,11 +3,14 @@ FROM ubuntu:20.04
 LABEL maintainer="Ryan Durham <ryan@stagerightlabs.com>"
 
 ARG DEBIAN_FRONTEND=noninteractive
+ARG UID=1000
+ARG GID=1000
 
-# Add a user with UID 1000
-RUN useradd -u 1000 -ms /bin/bash ubuntu && \
+# Add a user with UID 1000 and GID 1000
+RUN groupadd -g ${GID} ubuntu && \
+    useradd -u ${UID} -g ${GID} -ms /bin/bash ubuntu && \
     mkdir -p /home/ubuntu/.config/composer /home/ubuntu/.config/psysh && \
-    chown -R ubuntu:ubuntu /home/ubuntu
+    chown -R ubuntu:ubuntu /home/ubuntu/.config
 
 # Update the base image
 RUN apt-get update && \
