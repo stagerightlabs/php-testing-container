@@ -2,5 +2,13 @@
 
 # Build, tag and then push the PHP 8.0 image
 ./build.sh
+if [ $? -ne 0 ]
+then
+    exit $?
+fi
+
 docker push stagerightlabs/php-test-runner:8.0
-echo "The newly built PHP 8.0 image has been pushed to docker hub."
+if [ $? -eq 0 ]
+then
+    echo "The newly built PHP 8.0 image has been pushed to docker hub."
+fi
