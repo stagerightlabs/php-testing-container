@@ -28,6 +28,9 @@ RUN docker-php-ext-install gd pgsql zip bcmath intl
 # Install PCOV
 RUN pecl install pcov
 
+# Adjust memory limit
+RUN echo 'memory_limit = -1' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini
+
 # Install Composer (v2.*)
 ENV COMPOSER_HOME=/composer
 ENV PATH=$PATH:/composer/vendor/bin
