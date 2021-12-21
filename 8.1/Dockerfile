@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN docker-php-ext-install gd pgsql zip bcmath intl
 
 # Install PCOV
-RUN pecl install pcov
+RUN pecl install pcov && docker-php-ext-enable pcov
 
 # Adjust memory limit
 RUN echo 'memory_limit = -1' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini
