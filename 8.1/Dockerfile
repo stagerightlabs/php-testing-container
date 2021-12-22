@@ -1,26 +1,19 @@
-FROM php:8.1
+FROM php:8.1-cli-alpine
 
 LABEL maintainer="Ryan Durham <ryan@stagerightlabs.com>"
 
-ARG DEBIAN_FRONTEND=noninteractive
-ARG UID=1000
-ARG GID=1000
-
-# Add a user with UID 1000 and GID 1000
-RUN groupadd -g ${GID} ubuntu && \
-    useradd -u ${UID} -g ${GID} -ms /bin/bash ubuntu && \
-    mkdir -p /home/ubuntu/.config/composer /home/ubuntu/.config/psysh && \
-    chown -R ubuntu:ubuntu /home/ubuntu
+# Adjust the www-data user to have UID 1000 and GID 1000
+RUN deluser www-data && \
+    adduser -s /bin/sh -D -u 1000 -g 1000 www-data www-data && \
+    chown -R www-data:www-data /home/www-data
 
 # Install extension dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    unzip \
-    zlib1g-dev \
-    libicu-dev \
+RUN apk add autoconf g++ libtool make \
+    icu-dev \
     libpng-dev \
     libpq-dev \
     libzip-dev \
-    && rm -rf /var/cache/apt/lists/*
+    zlib-dev
 
 # Install extensions
 RUN docker-php-ext-install gd pgsql zip bcmath intl
@@ -36,3 +29,11 @@ ENV COMPOSER_HOME=/composer
 ENV PATH=$PATH:/composer/vendor/bin
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --2
+
+# Clean
+RUN apk del autoconf g++ libtool make
+RUN rm -rf /tmp/* /var/cache/apk/*
+
+# Container Settings
+ENTRYPOINT ["docker-php-entrypoint"]
+WORKDIR /var/www
