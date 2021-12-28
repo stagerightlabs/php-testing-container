@@ -20,8 +20,11 @@ RUN apk update && apk add autoconf g++ libtool make \
 # Install extensions
 RUN docker-php-ext-install gd pgsql zip bcmath intl
 
-# Install PCOV
+# Install PCOV extension
 RUN pecl install pcov && docker-php-ext-enable pcov
+
+# Install MongoDB extension
+RUN pecl install mongodb && docker-php-ext-enable mongodb
 
 # Adjust memory limit
 RUN echo 'memory_limit = -1' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini
