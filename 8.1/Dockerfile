@@ -8,7 +8,7 @@ RUN deluser www-data && \
     chown -R www-data:www-data /home/www-data
 
 # Install extension dependencies
-RUN apk add autoconf g++ libtool make \
+RUN apk add autoconf g++ libtool make git \
     icu-dev \
     libpng-dev \
     libpq-dev \
