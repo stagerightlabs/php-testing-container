@@ -21,6 +21,9 @@ RUN docker-php-ext-install gd pgsql zip bcmath intl
 # Install PCOV
 RUN pecl install pcov && docker-php-ext-enable pcov
 
+# Install MongoDB extension
+RUN pecl install mongodb && docker-php-ext-enable mongodb
+
 # Adjust memory limit
 RUN echo 'memory_limit = -1' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini
 
