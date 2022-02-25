@@ -12,11 +12,12 @@ RUN apk add autoconf g++ libtool make git \
     icu-dev \
     libpng-dev \
     libpq-dev \
+    libxslt-dev \
     libzip-dev \
     zlib-dev
 
 # Install extensions
-RUN docker-php-ext-install gd pgsql zip bcmath intl
+RUN docker-php-ext-install gd pgsql zip bcmath intl xsl
 
 # Install PCOV
 RUN pecl install pcov && docker-php-ext-enable pcov

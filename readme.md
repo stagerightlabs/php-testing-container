@@ -16,6 +16,7 @@ These images include the following PHP extensions, where applicable:
 - mongodb
 - PCOV
 - pgsql
+- xsl
 - zip
 
 ## Credits
