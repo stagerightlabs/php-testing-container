@@ -1,4 +1,4 @@
-FROM php:8.2-cli-alpine
+FROM php:8.3-cli-alpine
 
 LABEL maintainer="Ryan Durham <ryan@stagerightlabs.com>"
 
