@@ -32,6 +32,9 @@ ENV PATH=$PATH:/composer/vendor/bin
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --2
 
+# Laravel Installer
+RUN composer global require laravel/installer
+
 # Clean
 RUN apk del autoconf g++ libtool make linux-headers
 RUN rm -rf /tmp/* /var/cache/apk/*
